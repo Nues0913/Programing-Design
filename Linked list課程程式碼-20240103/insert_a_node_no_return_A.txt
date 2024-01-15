@@ -1,0 +1,14 @@
+void insert_a_nodeA(node **h, node *p)
+{
+    node **x=h;
+
+    if(p==NULL) return;
+
+    while ((*x)!=NULL && (*x)->data < p->data)
+          x = &((*x)->next);
+    p->next = (*x); 
+    (*x) = p;
+    return;
+}
+calling:
+insert_a_nodeA(&head, p);

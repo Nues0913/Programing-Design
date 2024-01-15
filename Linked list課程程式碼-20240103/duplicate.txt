@@ -1,0 +1,14 @@
+node *duplicate(node *h)
+{
+    node *t=NULL, *newh=NULL, *tail;
+
+    while (h !=NULL){
+          t=create_a_node(h->data);
+          if(newh==NULL) {newh=tail=t;}
+          else{tail->next = t; tail=tail->next;} //tail=tail->next=t;
+          h = h->next;
+    }
+    return newh;
+}
+calling:
+h2 = duplicate(h1);

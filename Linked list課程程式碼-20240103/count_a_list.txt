@@ -1,0 +1,13 @@
+int count_a_list(node *head)
+{
+    node *t=head;
+    int count=0;
+
+    while(t != NULL){
+         count++;
+         t = t -> next
+    }
+    return count;
+}
+calling:
+n = count_a_list(head);

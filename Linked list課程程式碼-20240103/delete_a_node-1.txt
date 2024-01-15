@@ -1,0 +1,26 @@
+node *search_a_list(node *head, int d)
+{
+    node *t=head, *prev=NULL;
+    while (t != NULL && t->data != d){
+         if(t->data >d) return NULL;
+         t = t -> next;
+    }
+    return t;
+}
+node *delete_a_node(node **head, int d)
+{
+    node *t=*head, *prev=NULL, *p;
+    p = search_a_list(t, d);
+    while (t != NULL && t->data != d){
+         if(t->data >d) return NULL;
+         prev = t;
+         t = t -> next
+    }
+    if(t==NULL) {return NULL;}
+    if(prev==NULL) {*head = t->next; t->next=NULL; return t;}
+    prev->next = t->next;
+    t->next=NULL;
+    return t;
+}
+calling:
+p = delete_a_node(&head, data);

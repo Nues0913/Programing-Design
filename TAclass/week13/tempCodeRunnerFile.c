@@ -1,0 +1,1 @@
+if(str[i+j] != cut[j]) break;

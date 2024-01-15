@@ -1,0 +1,163 @@
+
+https://www.equestionanswers.com/c/c-binary-mode.php
+
+https://www.cnblogs.com/cnxkey/articles/7773957.html
+
+google "c fopen wb mode"
+https://www.google.com/search?q=c+fopen+wb+mode&oq=C+fopen+wb&gs_lcrp=EgZjaHJvbWUqBggBEAAYHjIGCAAQRRg5MgYIARAAGB4yBggCEEUYQDIGCAMQRRhAMgYIBBBFGEDSAQoxNjgxMWowajE1qAIAsAIA&sourceid=chrome&ie=UTF-8#ip=1
+
+
+
+#include <stdio.h>
+char buf[10] = {10,10,10,10,10,10,10,10,10,10};
+
+FILE *fp = fopen("c:\\test.dat","w");
+fwrite(buf,1,10,fp);
+fclose(fp);
+
+FILE *fp1 = fopen("c:\\test1.dat","wb");
+fwrite(buf,1,10,fp);
+fclose(fp1);
+
+
+/* Student Database Add records */
+#include <stdio.h>
+
+typedef struct _student_t
+{
+  char name[20];
+  int roll;
+  int std;
+
+} student_t;
+int main(int argc, char *argv[])
+{
+  FILE *fp;
+  student_t s;
+  memset(&s, 0, sizeof(s));
+  fp = fopen ("records.dat", "wb");
+  if(fp) {
+    printf ("== Student Database Add records ==\n");
+    printf ("Name : ");
+    scanf ("%[^\n]", s.name);
+    fflush (stdin);
+    printf ("Roll : ");
+    scanf ("%d", &s.roll);
+    printf ("Std : ");
+    scanf ("%d", &s.std);
+    if (fwrite(&s, sizeof(s), 1, fp)) {
+      printf ("Record added.");
+    }
+    fclose(fp);
+
+  }
+  return 0;
+}
+
+
+Vim 搭配 xxd 指令作為 16 進位編輯器教學
+https://blog.gtwang.org/useful-tools/how-to-use-vim-as-a-hex-editor/
+
+在 Vim 中輸入 :%! xxd，然後按下 Enter 鍵。
+
+若要將編輯過後的內容轉換回二進位格式，則在 Vim 中輸入 :%! xxd -r，原理跟前面的轉換大同小異，只不過現在是乎叫 xxd -r 將 16 進位的排版格式轉換回二進位的原始資料。
+
+
+https://www.geeksforgeeks.org/file-opening-modesr-versus-r/
+
+#include <stdio.h> 
+  
+void main() 
+{ 
+    FILE* fp; 
+    char ch; 
+    // Open file in Read mode 
+    fp = fopen("INPUT.txt", "r+"); 
+  
+    // content of the file:geeksforgeeks 
+  
+    while (1) { 
+        ch = fgetc(fp); // Read a Character 
+        if (ch == EOF) // Check for End of File 
+            break; 
+  
+        printf("%c", ch); 
+    } 
+    fprintf(fp, " online reference."); 
+  
+    fclose(fp); // Close File after Reading 
+
+// content of the file: geeksforgeeks online reference. 
+  
+    fp = fopen("INPUT.txt", "r+"); // Open file in r + mode 
+    while (1) { 
+        ch = fgetc(fp); // Read a Character 
+        if (ch == EOF) // Check for End of File 
+            break; 
+  
+        printf("%c", ch); 
+    } 
+    fclose(fp); 
+} 
+
+
+============================================================================================
+https://stackoverflow.com/questions/53285029/what-is-the-difference-between-r-and-a-in-fopen
+
+int main() {
+    FILE * fp;
+
+    if(fp==NULL)
+    {
+        return -1;
+    }
+
+    fp = fopen("file.txt", "r+");
+    fprintf(fp, "%s %s %s %d", "This", " is ", "test ticket ", 10001);
+    fflush(fp);
+    fclose(fp);
+
+    fp = fopen("file.txt", "r+");
+    fprintf(fp, "%s %s %s %d", "This", " is ", "test ticket ", 10002);
+    fflush(fp);
+    fclose(fp);
+
+    fp = fopen("file.txt", "r+");
+    fprintf(fp, "%s %s %s %d", "This", " is ", "test ticket ", 10003);
+    fflush(fp);
+    fclose(fp);
+
+    return(0);
+}
+Also this question has already answered here
+
+This will give us a file like:
+
+This is test ticket 10003
+
+which is normal because the first call wrote
+
+This is test ticket 10001
+
+the second call changed 1 to 2 and the third call changed 2 to 3. Now if we change those 3 fopen calls like:
+
+
+    fp = fopen("file.txt", "a+");
+    fprintf(fp, "%s %s %s %d", "This", " is ", "test ticket ", 10001);
+    fflush(fp);
+    fclose(fp);
+
+    fp = fopen("file.txt", "a+");
+    fprintf(fp, "%s %s %s %d", "This", " is ", "test ticket ", 10002);
+    fflush(fp);
+    fclose(fp);
+
+    fp = fopen("file.txt", "a+");
+    fprintf(fp, "%s %s %s %d", "This", " is ", "test ticket ", 10003);
+    fflush(fp);
+    fclose(fp);
+We will get
+
+This is test ticket 10001This is test ticket 10002This is test ticket 10003
+
+as each call appended.
